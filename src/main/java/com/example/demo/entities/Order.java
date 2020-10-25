@@ -9,7 +9,7 @@ import java.time.Instant;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_orders")
+@Table(name = "tb_order")
 public class Order {
 
     @Id
