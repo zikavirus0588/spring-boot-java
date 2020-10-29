@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_order")
@@ -22,6 +24,9 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "client_id") //this client can have many orders. client_id is the column that map the relationship
     private User client;
+
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> items = new HashSet<>();
 
     public Order(){
     }
@@ -59,6 +64,10 @@ public class Order {
 
     public OrderStatus getOrderStatus() {
         return OrderStatus.valueOf(orderStatus);
+    }
+
+    public Set<OrderItem> getItems() {
+        return items;
     }
 
     public void setOrderStatus(OrderStatus orderStatus) {
