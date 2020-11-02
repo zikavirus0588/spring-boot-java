@@ -49,7 +49,7 @@ public class UserResource {
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<User> update(@PathVariable long id, @RequestBody User obj) {
-        obj = userService.updtate(id,obj);
+        obj = userService.update(id,obj);
         return ResponseEntity.ok().body(obj);
     }
 }
