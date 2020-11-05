@@ -28,3 +28,10 @@ gRPC in Java:
 	c. implement the messages for your proto (the main message, request and response).
 	d. send the result as a response.
 	e. shut down the channel: channel.shutdown();
+
+4. create a class with YourProtoNameServiceImpl to implement the methods.
+	a. Extract the fields that you need.
+	b. Create the result.
+	c. Create the response: 
+	c. send the response .onNext() method with your response.
+	d. complete the remote procedure call (rpc)
