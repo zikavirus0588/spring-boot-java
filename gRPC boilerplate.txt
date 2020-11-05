@@ -1,0 +1,30 @@
+gRPC in Java:
+
+1. create a proto directory inside the main folder in your application.
+	a. create a package with the name of your proto.
+	b. create a protofile with the name of your package: "myPackage.proto"
+	c. configure the protofile with the basics: syntax = "proto3"; package nameOfYourPackage; 
+		option java_package = "com.proto.nameOfYourPackage"; option java_multiple_files = true
+	d. create as many messages as you need.
+	e. create the service of your proto. 
+		For unary services: rpc NameOfYourPackage(NameOfYourPackageRequest) returns (NameOfYourPackageResponse) {};
+	f. Go to Gradle > Tasks > other > generateProto and double click it.
+
+2. create server package in the java folder
+	a. Create a server with ServerBuilder with a port number 50051 and the build() method at the end.
+	b. Star the server with the method .start().
+	c. Add a shutdownhook through the Runtime.getRuntime() method: Runtime.getRuntime().addShutdownHook(new Thread( () -> {
+            System.out.println("Received shutdown request");
+            server.shutdown();
+            System.out.println("Successfully stopped the server");
+        }));
+	d. Add an awaitTermination() to wait for the exit command after shuttindown the server.
+
+3. create a client package in the java folder
+	a. Create a channel to send the protocol buffers: ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost",50051)
+                .usePlaintext()
+                .build();
+	b. Create a stub: YourServiceGrpc.YourServiceBlockingStub yourProtoClient = YourServiceGrpc.newBlockingStub(channel);
+	c. implement the messages for your proto (the main message, request and response).
+	d. send the result as a response.
+	e. shut down the channel: channel.shutdown();
